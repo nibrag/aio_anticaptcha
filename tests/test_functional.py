@@ -66,10 +66,6 @@ class AntiCaptchaTestCase(unittest.TestCase):
         self.assertIs(ses, ag._session)
         ag.close()
 
-        ag.__enter__()
-        self.assertIsNot(ses, ag._session)
-        ag.close()
-
     def test_exit_ctx(self):
         with AntiCaptcha(api_key, loop=self.loop) as ag:
             self.assertIsInstance(ag._session, aiohttp.ClientSession)

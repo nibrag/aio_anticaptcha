@@ -186,8 +186,6 @@ class AntiCaptcha:
                 raise ServiceError('Not request action received')
 
     def __enter__(self):
-        if self._session.closed:
-            self._session = self._create_session()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
