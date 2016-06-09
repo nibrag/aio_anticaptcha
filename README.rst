@@ -49,13 +49,18 @@ With context manager
         try:
             with AntiCaptcha('API-KEY', loop=loop) as ac:
                 # io.IOBase
-                resolved, captcha_id = await ac.resolve(open('captcha.jpg'))
+                fh = open('captcha.jpg')
+                resolved, captcha_id = await ac.resolve(fh)
 
                 # or bytes, bytearray
                 bytes_buff = open('captcha.jpg', 'rb').read()
                 resolved, captcha_id = await ac.resolved(bytes_buff)
+        except ZeroBalanceError:
+            print('Zero balance')
+        except UserKeyError:
+            print('Invalid api key...')
         except ServiceError as e:
-            print(e)
+            print('Something else', str(e))
 
     if __name__ == '__main__':
         loop = asyncio.get_event_loop()
