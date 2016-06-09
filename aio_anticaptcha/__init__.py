@@ -163,27 +163,32 @@ class AntiCaptcha:
         return aiohttp.ClientSession(loop=self._loop)
 
     def _handle_error(self, msg):
+        msg = msg.upper()
         if msg.startswith('ERROR_'):
-            if msg == 'ERROR_WRONG_USER_KEY':
-                raise UserKeyError('Account authorization key is invalid')
-            if msg == 'ERROR_KEY_DOES_NOT_EXIST':
-                raise UserKeyError('Account authorization key '
-                                   'not found in the system')
-            if msg == 'ERROR_ZERO_BALANCE':
-                raise ZeroBalanceError('Account has zero or negative balance')
-            if msg == 'ERROR_ZERO_CAPTCHA_FILESIZE':
-                raise ServiceError('The size of the captcha you are '
-                                   'uploading is less than 100 bytes.')
-            if msg == 'ERROR_IMAGE_TYPE_NOT_SUPPORTED':
-                raise ServiceError('Could not determine captcha file type')
-            if msg == 'ERROR_IP_NOT_ALLOWED':
-                raise ServiceError('Request with current account key '
-                                   'is not allowed from your IP')
-            if msg == 'ERROR_NO_SUCH_CAPCHA_ID':
-                raise ServiceError('Captcha with such ID was '
-                                   'not found in the system')
-            if msg == 'ERROR_NO_REQUEST_ACTION_RECEIVED':
-                raise ServiceError('Not request action received')
+            errs = {
+                'ERROR_WRONG_USER_KEY':
+                    UserKeyError('Account authorization key is invalid'),
+                'ERROR_KEY_DOES_NOT_EXIST':
+                    UserKeyError('Account authorization key '
+                                 'not found in the system'),
+                'ERROR_ZERO_BALANCE':
+                    ZeroBalanceError('Account has zero or negative balance'),
+                'ERROR_ZERO_CAPTCHA_FILESIZE':
+                    ServiceError('The size of the captcha you are '
+                                 'uploading is less than 100 bytes.'),
+                'ERROR_IMAGE_TYPE_NOT_SUPPORTED':
+                    ServiceError('Could not determine captcha file type'),
+                'ERROR_IP_NOT_ALLOWED':
+                    ServiceError('Request with current account key '
+                                 'is not allowed from your IP'),
+                'ERROR_NO_SUCH_CAPCHA_ID':
+                    ServiceError('Captcha with such ID was '
+                                 'not found in the system'),
+                'ERROR_NO_REQUEST_ACTION_RECEIVED':
+                    ServiceError('No request action received')
+            }
+            if msg in errs:
+                raise errs[msg]
 
     def __enter__(self):
         return self

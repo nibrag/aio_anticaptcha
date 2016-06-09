@@ -108,7 +108,7 @@ class AntiCaptchaTestCase(unittest.TestCase):
 
         with self.assertRaises(ServiceError) as cm:
             ag._handle_error('ERROR_NO_REQUEST_ACTION_RECEIVED')
-        self.assertIn('Not request action received', str(cm.exception))
+        self.assertIn('No request action received', str(cm.exception))
         ag.close()
 
     def test_abuse_http_err(self):
@@ -128,7 +128,7 @@ class AntiCaptchaTestCase(unittest.TestCase):
 
         with self.assertRaises(ServiceError) as cm:
             self.loop.run_until_complete(ag.abuse(123))
-        self.assertIn('Not request action received', str(cm.exception))
+        self.assertIn('No request action received', str(cm.exception))
 
     def test_abuse_client_error(self):
         ag = AntiCaptcha(api_key, loop=self.loop)
@@ -159,7 +159,7 @@ class AntiCaptchaTestCase(unittest.TestCase):
 
         with self.assertRaises(ServiceError) as cm:
             self.loop.run_until_complete(ag.get_balance())
-        self.assertIn('Not request action received', str(cm.exception))
+        self.assertIn('No request action received', str(cm.exception))
 
     def test_get_balance_client_error(self):
         ag = AntiCaptcha(api_key, loop=self.loop)
@@ -207,7 +207,7 @@ class AntiCaptchaTestCase(unittest.TestCase):
 
         with self.assertRaises(ServiceError) as cm:
             self.loop.run_until_complete(ag._get_captcha('id'))
-        self.assertIn('Not request action received', str(cm.exception))
+        self.assertIn('No request action received', str(cm.exception))
 
     def test_get_captcha_client_error(self):
         ag = AntiCaptcha(api_key, loop=self.loop)
@@ -314,7 +314,7 @@ class AntiCaptchaTestCase(unittest.TestCase):
 
         with self.assertRaises(ServiceError) as cm:
             self.loop.run_until_complete(ag._send_captcha(b'id'))
-        self.assertIn('Not request action received', str(cm.exception))
+        self.assertIn('No request action received', str(cm.exception))
 
     def test_send_captcha_client_error(self):
         ag = AntiCaptcha(api_key, loop=self.loop)
