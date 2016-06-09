@@ -144,6 +144,7 @@ https://anti-captcha.com/apidoc
 
 Customizing anticaptcha service
 -------------------------------
+
 .. code-block:: python
 
     import asyncio
@@ -152,6 +153,23 @@ Customizing anticaptcha service
     async def run(loop):
         with AntiCaptcha('API-KEY', loop=loop, domain='antigate.com', port=80) as ac:
             balance = await ac.get_balance()
+
+    if __name__ == '__main__':
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(run(loop))
+        loop.close()
+
+AntiGate.com supported
+----------------------
+
+.. code-block:: python
+
+    import asyncio
+    from aio_anticaptcha import AntiGate
+
+    async def run(loop):
+        with AntiGate('API-KEY', loop=loop) as ag:
+            balance = await ag.get_balance()
 
     if __name__ == '__main__':
         loop = asyncio.get_event_loop()
