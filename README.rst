@@ -8,6 +8,9 @@ Real-time captcha-to-text decodings for asyncio
    :target: https://coveralls.io/github/nibrag/aio_anticaptcha?branch=master
    :align: right
 
+.. image:: https://badge.fury.io/py/aio_anticaptcha.svg
+   :target: https://badge.fury.io/py/aio_anticaptcha
+
 API documentation
 -----------------
 - https://anti-captcha.com/apidoc
